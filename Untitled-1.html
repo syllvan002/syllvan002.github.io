@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Laranja e Preto</title>
+    <style>
+        body {
+            background-color: #333;
+            font-family: Arial, sans-serif;
+        }
+
+        .calculadora {
+            width: 300px;
+            height: 400px;
+            background-color: #FFA07A;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 50px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #display {
+            width: 100%;
+            height: 40px;
+            background-color: #333;
+            color: #FFF;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            margin-top: 20px;
+        }
+
+        .botao {
+            background-color: #333;
+            color: #FFF;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .botao:hover {
+            background-color: #444;
+        }
+
+        #igual {
+            background-color: #FFA07A;
+            color: #333;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculadora">
+        <input type="text" id="display" disabled>
+        <div class="botoes">
+            <button class="botao" id="7">7</button>
+            <button class="botao" id="8">8</button>
+            <button class="botao" id="9">9</button>
+            <button class="botao" id="dividir">/</button>
+            <button class="botao" id="4">4</button>
+            <button class="botao" id="5">5</button>
+            <button class="botao" id="6">6</button>
+            <button class="botao" id="multiplicar">*</button>
+            <button class="botao" id="1">1</button>
+            <button class="botao" id="2">2</button>
+            <button class="botao" id="3">3</button>
+            <button class="botao" id="subtrair">-</button>
+            <button class="botao" id="0">0</button>
+            <button class="botao" id="ponto">.</button>
+            <button class="botao" id="somar">+</button>
+            <button class="botao" id="igual">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        const botoes = document.querySelectorAll('.botao');
+
+        let valorAtual = '';
+        let operacao = '';
+
+        botoes.forEach(botao => {
+            botao.addEventListener('click', () => {
+                const valor = botao.textContent;
+
+                if (valor === '=') {
+                    calcular();
+                } else if (valor === '+' || valor === '-' || valor === '*' || valor === '/') {
+                    operacao = valor;
+                    valorAtual = '';
+                } else {
+                    valorAtual += valor;
+                    display.value = valorAtual;
+                }
+            });
+        });
+
+        function calcular() {
+            const valor1 = parseFloat(valorAtual);
+            const valor2 = parseFloat(display.value);
+            let resultado;
+
+            switch (operacao) {
+                case '+':
+                    resultado = valor1 + valor2;
+                    break;
+                case '-':
+                    resultado = valor1 - valor2;
+                    break;
+                case '*':
+                    resultado = valor1 * valor2;
+                    break;
+                case '/':
+                    resultado = valor1 / valor2;
+                    break;
+                default:
+                    resultado = 0;
+            }
+
+            display.value = resultado;
+            valorAtual = '';
+            operacao = '';
+        }
+    </script>
+</body>
+</html>
